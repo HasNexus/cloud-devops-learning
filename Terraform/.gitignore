@@ -1,0 +1,33 @@
+# Universal Terraform ignores:
+
+# Ignore Terraform working directories and lock files
+**/.terraform/*
+**/.terraform.lock.hcl
+
+# Ignore Terraform state files (for Azure or any environment)
+*.tfstate
+*.tfstate.*
+
+#Ignore real tf vars files
+*.tfvars
+
+# Ignore sensitive SSH keys
+*.pem
+*.pub
+*.key
+id_rsa*
+id_ed25519*
+
+# Ignore crash logs and overrides
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore backups and logs
+*.backup
+*.log
+
+# Ignore VS Code project settings
+.vscode/
