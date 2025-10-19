@@ -1,0 +1,12 @@
+sub_id         = "your-subscription-id" # <-- your Azure subscription ID
+prefix         = "your-prefix"               # <-- prefix for resource names
+ssh_key        = "C:/path/to/your/publickey.pub" # <-- path to your public key file
+private_key    = "C:/path/to/your/publickey.pub"     # <-- path to your private key file
+admin_username = "azureuser"               # <-- admin username for the VM
+location       = "UK South"                  # <-- Azure region
+my_ip_address  = "your-public-ip-address/32"  # <-- your public IP address
+
+tags = {
+  environment = "dev"
+  project     = "Terraform Testing"
+}
