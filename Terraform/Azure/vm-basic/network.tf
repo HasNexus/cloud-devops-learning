@@ -28,7 +28,7 @@ resource "azurerm_network_security_group" "allow_ssh_from_my_ip" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "137.220.70.190/32"
+    source_address_prefix      = var.my_ip_address
     destination_address_prefix = "*"
   }
 }
