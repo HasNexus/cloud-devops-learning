@@ -1,4 +1,4 @@
-# Upload Storage Account
+# upload-storage-account
 This Terraform configuration demonstrates how to upload a file to an Azure Storage Account.
 
 #What it does:
