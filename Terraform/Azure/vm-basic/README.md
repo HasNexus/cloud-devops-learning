@@ -1,4 +1,4 @@
-#vm-basic
+# vm-basic
 
 This Terraform config creates a basic Azure Virtual Machine with a:
 - Resource group
