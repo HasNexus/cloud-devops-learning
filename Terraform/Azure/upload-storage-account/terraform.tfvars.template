@@ -1,0 +1,9 @@
+sub_id         = ""                     # <-- subscription ID
+rg_name        = "tf-demo-rg"           # <-- resource group name
+rg_location    = "UK South"             # <-- resource group location
+stg_name       = "tfdemotest3212025"    # <-- storage account name
+container_name = "tf-demo-container"    # <-- storage container name
+container_access = "container"          # <-- container access type (Options include Container, Private or blob)
+blob_name      = "README.md"            # <-- blob name
+source_file    = "README.md"            # <-- source file for the blob
+content_type   = "text/plain"           # <-- content type for the blob
