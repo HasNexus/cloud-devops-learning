@@ -1,4 +1,4 @@
-#VM provision
+# vm-provisioned
 
 Upgraded version of VM basic that adds:
 - Provisioners to install apache2 and some packages to deploy a HMTL / CSS template
