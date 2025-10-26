@@ -7,7 +7,10 @@ This Terraform config creates a basic Azure Virtual Machine with a:
 - Ubuntu 22.04 LTS VM
 
 
+#How to use
+- Run `terraform init` and `terraform apply` to create
+
 #Notes
 - All Variables are provided interactively through the CLI
 - This version does **not** use a .tfvars file
-- See 'vm-provisioned' for a somewhat improved version of this with automated provisioning and variable files
+- See 'vm-provisioned' project for a somewhat improved version of this with automated provisioning and variable files
