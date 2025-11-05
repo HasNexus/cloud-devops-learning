@@ -1,0 +1,5 @@
+sub_id        = "00000000-0000-0000-0000-000000000000" # <-- subscription ID
+rg_name       = "tf-demo-rg"                           # <-- resource group name
+rg_location   = "UK South"                             # <-- resource group location
+stg_name      = ""                                     # <-- storage account name
+source_folder = "website_example"                      # <-- source file for the blob
