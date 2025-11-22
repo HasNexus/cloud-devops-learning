@@ -18,6 +18,6 @@ This Terraform configuration demonstrates how to set up and configure a Load bal
 
 # Things to know:
 1. Each VM has its own Public IP for Terraform to SSH into during provisioning
-2. A more efficient setup would use a single Bastion Host or an Ansible configuration for post-deployment actions instead of multiple Public IPs
+2. A futre setup would use an Ansible configuration for post-deployment actions instead of multiple Public IPs
 3. Future versions of this project will integrate Ansible to configure the VMs automatically.
 4. Occasionally, during the first run, Terraform may display a “remote-exec provisioner error” caused by temporary SSH or provisioning delays. If this occurs, simply rerun `terraform apply` andd the deployment will continue successfully.
