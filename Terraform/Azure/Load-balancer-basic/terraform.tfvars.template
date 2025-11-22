@@ -1,0 +1,6 @@
+sub_id        = "0000-0000-0000-0000"                  # <-- Azure Subscription ID
+prefix        = "tf-demo"                              # <-- prefix for all resources
+location      = "UK South"                             # <-- location
+ssh_key       = "C:/path/to/your/publickey.pub"        # <-- Path to your SSH public key
+my_ip_address = "your-public-ip-address/32"            # <-- your IP address for SSH access
+private_key   = "C:/path/to/your/privatekey"           # <-- Path to your SSH private key
