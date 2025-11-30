@@ -1,0 +1,35 @@
+---
+- name: Configure webservers
+  hosts: webservers
+  become: yes
+
+  tasks:
+    -  name: Update machines
+       ansible.builtin.apt:
+        update_cache: yes
+        upgrade: yes
+
+    -  name: Install apache2
+       ansible.builtin.apt:
+         name: apache2
+         state: present
+
+    -  name: Start apache2 service
+       ansible.builtin.service:
+         name: apache2
+         state: started
+
+    -  name: Copy index.html to webservers
+       ansible.builtin.copy:
+         content: "<h1>This is a load-balancer test configured with Anisible on {{ inventory_hostname }}<h1>"
+         dest: /var/www/html/index.html
+
+    -  name: Enable apache2 service
+       ansible.builtin.service:
+         name: apache2
+         enabled: yes 
+
+    -  name: Restart apache2 service
+       ansible.builtin.service:
+         name: apache2
+         state: restarted

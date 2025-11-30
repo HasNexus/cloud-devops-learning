@@ -1,0 +1,11 @@
+webservers:
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/tf-demo
+    ansible_user: azureuser
+  hosts:
+    vm-loadbalancer-1:
+      ansible_host: 172.166.196.86
+    vm-loadbalancer-2:
+      ansible_host: 172.167.135.217
+    vm-loadbalancer-3:
+      ansible_host: 4.234.141.126
