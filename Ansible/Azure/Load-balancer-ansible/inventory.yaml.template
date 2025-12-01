@@ -1,0 +1,11 @@
+webservers:
+  vars:
+    ansible_ssh_private_key_file: C:/path/to/your/privatekey  # Replace with actual path to your private key
+    ansible_user: azureuser
+  hosts:
+    vm-loadbalancer-1:
+      ansible_host: IpAddressHere                             # Replace with actual Public IP of VM 1
+    vm-loadbalancer-2:
+      ansible_host: IpAddressHere                             # Replace with actual Public IP of VM 2
+    vm-loadbalancer-3:
+      ansible_host: IpAddressHere                             # Replace with actual Public IP of VM 3

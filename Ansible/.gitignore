@@ -46,4 +46,5 @@ backend.tf
 # Ignore VS Code project settings
 .vscode/
 
-
+# Ignore Inventory files
+inventory.yaml
