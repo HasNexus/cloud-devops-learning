@@ -1,3 +1,12 @@
+data "azurerm_platform_image" "Ubuntu" {
+  location  = azurerm_resource_group.rg.location
+  publisher = "Canonical"
+  offer     = "0001-com-ubuntu-server-jammy"
+  sku       = "22_04-lts-gen2"
+}
+
+#Building VM using the Image ID from above data source
+
 resource "azurerm_linux_virtual_machine" "vm-01" {
   name                  = "${var.prefix}-vm-01"
   resource_group_name   = azurerm_resource_group.rg.name
@@ -23,9 +32,4 @@ resource "azurerm_linux_virtual_machine" "vm-01" {
   }
 
   tags = var.tags
-}
-
-output "public_ip_address" {
-  description = "The public IP address of the virtual machine"
-  value       = azurerm_public_ip.public_ip.ip_address
 }

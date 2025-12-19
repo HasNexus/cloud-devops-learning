@@ -1,0 +1,10 @@
+sub_id        = "your-subscription-id"                                      # replace with actual Subscription ID
+prefix        = "tf-demo"                                                   # naming prefix for resources
+ssh_key       = "/path/to/your/ssh/public/key.pub"                          # path to your SSH public key
+my_ip_address = "your.public.ip.address/32"                                 # replace with your public IP address in CIDR notation
+admin_username = "azureuser"
+
+tags = {
+  Environment = "Test"
+  Project     = "Terraform-Demo"
+}
