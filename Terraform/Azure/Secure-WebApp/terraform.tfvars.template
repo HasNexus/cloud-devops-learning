@@ -1,0 +1,12 @@
+sub_id                = "your-subscription-id"        # Replace with your actual Subscription ID
+location              = "Your Location"               # Azure region for resource deployment
+prefix                = "webapp-tf-demo"              # Prefix for naming resources. Replace as needed
+app_service_plan_sku  = "B1"                          # Basic app service tier
+docker_image_name     = "nginxdemos/hello:latest"     # Sample Docker image. Replace as needed
+docker_registry_url   = "https://index.docker.io"     # Docker Hub URL. You can change if using a different registry
+keyvault_pricing_tier = "standard"
+retention_days        = "7"                           # Number of days to retain deleted secrets
+tags = {  
+  "Environment" = "dev"
+  "Project"     = "terraform"
+}                                                     # Tags to be applied to resources
