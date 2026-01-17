@@ -45,3 +45,21 @@ variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
 }
+
+variable "vnet_address_space" {
+  description = "The address space for the Virtual Network"
+  type        = list(string)
+  default     = ["10.0.0.0/16"]
+}
+
+variable "webapp_subnet_address_prefix" {
+  description = "The address prefixes for the Web App Subnet"
+  type        = list(string)
+  default     = ["10.0.2.0/24"]
+}
+
+variable "keyvault_subnet_address_prefix" {
+  description = "The address prefixes for the Key Vault Subnet"
+  type        = list(string)
+  default     = ["10.0.3.0/24"]
+}

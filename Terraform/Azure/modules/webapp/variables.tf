@@ -1,7 +1,12 @@
 variable "sub_id" {
   description = "Please enter your Subscription ID"
   type        = string
-  sensitive = true
+  sensitive   = true
+}
+
+variable "resource_group_name" {
+  description = "The Resource Group where resources will be created"
+  type        = string
 }
 
 variable "location" {
@@ -34,12 +39,7 @@ variable "docker_registry_url" {
   type        = string
 }
 
-variable "keyvault_pricing_tier" {
-  description = "Pricing Tier for Keyvault. Standrad or Premium"
-  type = string  
-}
-
-variable "retention_days" {
-  description = "Days to retain deleted vaults. It can be configured to between 7 to 90 days. Once it has been set, it cannot be changed or removed."
-  type = string
+variable "webapp_subnet_id" {
+  description = "The Subnet ID for the Web App"
+  type        = string
 }
