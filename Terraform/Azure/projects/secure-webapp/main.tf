@@ -1,9 +1,6 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "RG-HAS-TEST"
-    storage_account_name = "hasstgtest"
-    container_name       = "tf-state-file"
-    key                  = "Secure-WebApp/terraform.tfstate"
+    key = "Secure-WebApp/terraform.tfstate"
   }
 }
 
@@ -20,7 +17,6 @@ resource "azurerm_resource_group" "rg" {
 
 module "web-app" {
   source               = "../../modules/webapp"
-  sub_id               = var.sub_id
   resource_group_name  = azurerm_resource_group.rg.name
   location             = var.location
   prefix               = var.prefix
@@ -33,7 +29,6 @@ module "web-app" {
 
 module "vnet" {
   source              = "../../modules/vnet"
-  sub_id              = var.sub_id
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   prefix              = var.prefix
@@ -69,7 +64,6 @@ resource "azurerm_subnet" "keyvault_subnet" {
 
 module "keyvault" {
   source                = "../../modules/keyvault"
-  sub_id                = var.sub_id
   resource_group_name   = azurerm_resource_group.rg.name
   location              = var.location
   prefix                = var.prefix

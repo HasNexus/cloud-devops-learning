@@ -1,3 +1,8 @@
+resource "azurerm_resource_group" "rg" {
+  name     = var.rg_name
+  location = var.rg_location
+}
+
 resource "azurerm_storage_account" "storage_account" {
   name                     = var.stg_name
   resource_group_name      = azurerm_resource_group.rg.name
@@ -5,7 +10,6 @@ resource "azurerm_storage_account" "storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
-
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
   storage_account_id = azurerm_storage_account.storage_account.id
@@ -46,8 +50,4 @@ resource "azurerm_storage_blob" "website_files" {
   type                   = "Block"
   source                 = "${path.module}/${var.source_folder}/${each.value}"
   content_type           = lookup(local.file_extensions, split(".", each.value)[length(split(".", each.value)) - 1], "application/octet-stream")
-}
-
-output "primary_web_endpoint" {
-  value = azurerm_storage_account.storage_account.primary_web_endpoint
 }

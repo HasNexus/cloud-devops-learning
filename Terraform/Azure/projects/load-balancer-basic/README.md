@@ -12,9 +12,10 @@ This Terraform configuration demonstrates how to set up and configure a Load bal
 
 
 # How to use:
-1. Copy `terraform.tfvars.template` to `terraform.tfvars`, or rename it directly  
-2. Replace the placeholders with your values  
-3. Run `terraform init` and `terraform apply` to create
+1. Copy `backend.hcl.template` to `backend.hcl` and fill in your storage account details
+2. Copy `terraform.tfvars.template` to `terraform.tfvars` and replace the placeholders with your values
+3. Run `terraform init -backend-config=backend.hcl`
+4. Run `terraform apply`
 
 # Things to know:
 1. Each VM has its own Public IP for Terraform to SSH into during provisioning

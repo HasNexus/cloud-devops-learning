@@ -1,0 +1,4 @@
+resource_group_name  = "YOUR-RESOURCE-GROUP"
+storage_account_name = "yourstorageaccount"
+container_name       = "your-container-name"
+key                  = "static-website/terraform.tfstate"

@@ -16,9 +16,10 @@ The configuration in this folder (`vm-basic`) calls the reusable resources defin
 
 
 # How to use
-- Copy `terraform.tfvars.template` to `terraform.tfvars` or just rename .template to .tfvars
-- Fill in your own values (subscription ID, SSH key path, IP address, etc.) 
-- Run `terraform init` and `terraform apply` to create
+- Copy `backend.hcl.template` to `backend.hcl` and fill in your storage account details
+- Copy `terraform.tfvars.template` to `terraform.tfvars` and fill in your own values (subscription ID, SSH key path, IP address, etc.)
+- Run `terraform init -backend-config=backend.hcl`
+- Run `terraform apply`
 
 # Notes
 - All Variables are provided interactively through the CLI

@@ -71,7 +71,6 @@ resource "azurerm_network_interface_backend_address_pool_association" "lb_backen
   depends_on              = [azurerm_lb_backend_address_pool.lb_backend_pool]
 }
 
-
 resource "azurerm_lb_probe" "lb_health_probe" {
   name                = "HTTP-Health-Probe"
   loadbalancer_id     = azurerm_lb.lb.id
@@ -92,10 +91,4 @@ resource "azurerm_lb_rule" "lb_rule" {
   backend_address_pool_ids = [azurerm_lb_backend_address_pool.lb_backend_pool.id]
   probe_id                 = azurerm_lb_probe.lb_health_probe.id
   depends_on               = [azurerm_lb.lb]
-}
-
-
-
-output "azurerm_public_ip" {
-  value = azurerm_public_ip.lb-public_ip.ip_address
 }

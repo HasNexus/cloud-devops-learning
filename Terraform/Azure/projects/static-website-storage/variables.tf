@@ -18,9 +18,7 @@ variable "stg_name" {
   type        = string
 }
 
-
 variable "source_folder" {
   description = "Please enter the source folder containing the website files"
   type        = string
 }
-

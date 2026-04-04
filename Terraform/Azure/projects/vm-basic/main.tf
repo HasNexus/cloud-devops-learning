@@ -1,9 +1,6 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "RG-HAS-TEST"
-    storage_account_name = "hasstgtest"
-    container_name       = "tf-state-file"
-    key                  = "vm-basic/terraform.tfstate"
+    key = "vm-basic/terraform.tfstate"
   }
 }
 
@@ -12,10 +9,15 @@ provider "azurerm" {
   subscription_id = var.sub_id
 }
 
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+  tags     = var.tags
+}
 
-module "vm-basic" {
-  source         = "../vm-basic-module"
-  sub_id         = var.sub_id
+module "vm" {
+  source         = "../vm"
+  resource_group_name = var.resource_group_name
   location       = var.location
   prefix         = var.prefix
   ssh_key        = file(var.ssh_key)
