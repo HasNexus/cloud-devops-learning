@@ -34,3 +34,5 @@ This Terraform configuration deploys an Azure Web App and a Linux VM with Grafan
 - The `null_resource` provisioner handles copying and executing the setup scripts over SSH, so your private key path must be correct and the VM must be reachable
 - The service principal password is marked sensitive in outputs — use `terraform output -raw grafana_client_secret` to retrieve it
 - Change the default Grafana admin password after first login
+
+#
