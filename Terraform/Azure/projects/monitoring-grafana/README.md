@@ -35,4 +35,4 @@ This Terraform configuration deploys an Azure Web App and a Linux VM with Grafan
 - The service principal password is marked sensitive in outputs — use `terraform output -raw grafana_client_secret` to retrieve it
 - Change the default Grafana admin password after first login
 
-#
+
