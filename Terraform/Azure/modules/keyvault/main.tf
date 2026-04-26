@@ -1,8 +1,3 @@
-provider "azurerm" {
-  features {}
-  subscription_id = var.sub_id
-}
-
 data "azurerm_client_config" "current" {}
 
 #Creating a Key Vault to store secrets

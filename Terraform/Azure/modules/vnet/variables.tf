@@ -1,9 +1,3 @@
-variable "sub_id" {
-  description = "Please enter your Subscription ID"
-  type        = string
-  sensitive   = true
-}
-
 variable "resource_group_name" {
   description = "The Resource Group where resources will be created"
   type        = string
@@ -18,6 +12,13 @@ variable "vnet_address_space" {
   description = "The address space for the Virtual Network"
   type        = list(string)
   default     = ["10.0.0.0/16"]
+}
+
+variable "subnet_address_space" {
+  description = "The address space for the Subnet"
+  type        = list(string)
+  default     = ["10.0.1.0/24"]
+  
 }
 
 variable "prefix" {

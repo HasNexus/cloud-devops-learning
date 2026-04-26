@@ -1,5 +1,5 @@
-variable "sub_id" {
-  description = "Please enter your Subscription ID"
+variable "resource_group_name" {
+  description = "The Resource Group where resources will be created"
   type        = string
 }
 
@@ -23,7 +23,10 @@ variable "my_ip_address" {
   type = string
 }
 
-
+variable "subnet_id" {
+    description = "The Subnet ID where the VM will be placed"
+    type        = string
+}
 
 variable "admin_username" {
   description = "Admin username for the VM"
@@ -34,4 +37,3 @@ variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
 }
-

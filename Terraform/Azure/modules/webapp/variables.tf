@@ -1,9 +1,3 @@
-variable "sub_id" {
-  description = "Please enter your Subscription ID"
-  type        = string
-  sensitive   = true
-}
-
 variable "resource_group_name" {
   description = "The Resource Group where resources will be created"
   type        = string

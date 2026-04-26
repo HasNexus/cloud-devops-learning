@@ -1,0 +1,18 @@
+sub_id              = "your-subscription-id"                    # Replace with your actual Subscription ID
+resource_group_name = "monitoring-rg"
+location            = "your-location"                           # Azure region for resource deployment
+prefix              = "tf-demo"
+ssh_key             = "your-ssh-public-key"                     # Replace with your SSH public key (e.g., contents of ~/.ssh/id_rsa.pub)
+private_ssh_key     = "your-ssh-private-key"
+my_ip_address       = "your-public-ip-address"                  # Replace with your public IP address
+admin_username      = "azureuser"
+tags = {
+  environment = "terraform"                                     # Tag for environment
+  project     = "monitoring"                                    # Tag for project
+}
+app_service_plan_sku         = "S1"                             # App Service Plan SKU (e.g., F1, B1, S1)
+docker_image_name            = "nginxdemos/hello:latest"
+docker_registry_url          = "https://index.docker.io"
+vnet_address_space           = ["10.0.0.0/16"]                  # Address space for the virtual network
+subnet_address_space         = ["10.0.1.0/24"]                  # Address space for the subnet
+webapp_subnet_address_prefix = ["10.0.2.0/24"]                  # Address prefix for the web app subnet

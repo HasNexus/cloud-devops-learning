@@ -1,9 +1,3 @@
-provider "azurerm" {
-  features {}
-  subscription_id = var.sub_id
-}
-
-
 #Creating App Service Plan
 resource "azurerm_service_plan" "appserviceplan" {
   name                = "${var.prefix}-appserviceplan"
