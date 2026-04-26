@@ -21,6 +21,10 @@ validate-job:
     - cd Terraform/Azure/projects/monitoring-grafana
     - echo "Validating Terraform configuration..."
     - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.terraform.tfstate"
     - terraform validate
 
 
