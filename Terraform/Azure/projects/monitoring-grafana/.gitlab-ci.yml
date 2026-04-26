@@ -8,8 +8,9 @@ stages:
 # Validate stage
 validate-job:
   stage: validate
-  image: hashicorp/terraform:latest
-  entrypoint: [""]
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
@@ -26,8 +27,9 @@ validate-job:
 # Plan stage
 plan-job:
   stage: plan
-  image: hashicorp/terraform:latest
-  entrypoint: [""]
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
   needs: [validate-job]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
@@ -44,8 +46,9 @@ plan-job:
 # Deploy stage
 deploy-job:
   stage: deploy
-  image: hashicorp/terraform:latest
-  entrypoint: [""]
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
   needs: [plan-job]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
@@ -69,8 +72,9 @@ deploy-job:
 # Configure stage
 configure-job:
   stage: configure
-  entrypoint: [""]
-  image: cytopia/ansible:latest
+  image:
+    name: cytopia/ansible:latest
+    entrypoint: [""]
   needs: [deploy-job]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
