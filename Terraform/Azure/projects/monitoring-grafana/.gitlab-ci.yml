@@ -45,6 +45,11 @@ plan-job:
   script:
     - cd Terraform/Azure/projects/monitoring-grafana
     - echo "Planning Terraform deployment..."
+    - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.terraform.tfstate"
     - terraform plan
 
 
@@ -64,6 +69,11 @@ deploy-job:
   script:
     - cd Terraform/Azure/projects/monitoring-grafana
     - echo "Applying Terraform deployment..."
+    - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.terraform.tfstate"
     - terraform apply -auto-approve
 
   after_script:
