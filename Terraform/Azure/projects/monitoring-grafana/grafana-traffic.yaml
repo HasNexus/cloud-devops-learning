@@ -1,0 +1,18 @@
+- name: Copy updated traffic file with owner and permissions
+  hosts: webserver
+  become: yes
+
+  tasks:
+  - name: Stop existing traffic script
+    ansible.builtin.shell: pkill -f traffic.sh || true
+
+  - name: Copy traffic.sh to remote server with correct permissions
+    ansible.builtin.copy:
+      src: ./traffic.sh
+      dest: /tmp/traffic.sh
+      owner: root
+      mode: '0755'
+
+  - name: Execute traffic.sh in the background
+    ansible.builtin.shell: |
+      nohup /tmp/traffic.sh > /tmp/traffic.log 2>&1 &

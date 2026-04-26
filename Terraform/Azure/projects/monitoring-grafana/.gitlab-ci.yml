@@ -1,0 +1,79 @@
+stages:
+ - validate
+ - plan
+ - deploy
+ - configure
+
+
+# Validate stage
+validate-job:
+  stage: validate
+  image: hashicorp/terraform:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana
+    - echo "Validating Terraform configuration..."
+    - terraform init
+    - terraform validate
+
+
+# Plan stage
+plan-job:
+  stage: plan
+  image: hashicorp/terraform:latest
+  needs: [validate-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana
+    - echo "Planning Terraform deployment..."
+    - terraform plan
+
+
+# Deploy stage
+deploy-job:
+  stage: deploy
+  image: hashicorp/terraform:latest
+  needs: [plan-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana
+    - echo "Applying Terraform deployment..."
+    - terraform apply -auto-approve
+
+  after_script:
+    - ls -la
+  artifacts:
+    paths:
+      - Terraform/Azure/projects/monitoring-grafana/inventory.yaml
+    when: always
+
+
+# Configure stage
+configure-job:
+  stage: configure
+  image: cytopia/ansible:latest
+  needs: [deploy-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - Terraform/Azure/projects/monitoring-grafana/grafana-traffic.yaml
+        - Terraform/Azure/projects/monitoring-grafana/traffic.sh
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana
+    - echo "Configuring infrastructure with Ansible..."
+    - ansible-playbook -i inventory.yaml grafana-traffic.yaml

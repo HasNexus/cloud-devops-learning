@@ -107,6 +107,21 @@ resource "null_resource" "null_vm" {
 
 }
 
+# This resource creates a local file named "inventory.yaml" with the content below which is used as an Ansible inventory file to manage the Grafana VM. It includes the necessary variables for SSH access and the public IP for the Grafana VM.
+resource "local_file" "ansible_inventory" {
+  content  = <<-EOT
+  webserver:
+    vars:
+      ansible_ssh_private_key_file: ${var.private_ssh_key}
+      ansible_user: ${var.admin_username}
+    hosts:
+      grafana-vm:
+        ansible_host: ${module.vm.public_ip_address}
+  EOT
+  filename = "inventory.yaml"
+  
+}
+
 resource "azuread_application" "grafana_app" {
   display_name = "Grafana-AD-App"
   depends_on   = [null_resource.null_vm]
