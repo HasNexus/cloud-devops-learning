@@ -1,5 +1,2 @@
 include:
   - local: Terraform/Azure/projects/monitoring-grafana/.gitlab-ci.yml
-    rules:
-      - changes:
-          - Terraform/Azure/projects/monitoring-grafana/**/*
