@@ -1,3 +1,4 @@
+#Listing stages for the CI/CD pipeline
 stages:
  - validate
  - plan
