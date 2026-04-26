@@ -78,6 +78,7 @@ deploy-job:
 
   after_script:
     - ls -la
+  # Save the generated Ansible inventory file for use in the configure stage
   artifacts:
     paths:
       - Terraform/Azure/projects/monitoring-grafana/inventory.yaml

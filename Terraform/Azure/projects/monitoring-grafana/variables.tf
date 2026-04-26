@@ -36,11 +36,16 @@ variable "my_ip_address" {
 variable "admin_username" {
   description = "Admin username for the VM"
   type        = string
+  default = "azureuser"
 }
 
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
+  default = {
+    environment = "terraform"
+    project     = "monitoring"
+  }
 }
 
 variable "vnet_address_space" {
@@ -64,16 +69,20 @@ variable "webapp_subnet_address_prefix" {
 variable "app_service_plan_sku" {
   description = "The SKU of the App Service Plan"
   type        = string
+  default     = "S1"
 }
 
 variable "docker_image_name" {
   description = "The Docker image to be used for the Web App"
   type        = string
+  default     = "nginxdemos/hello:latest"
 }
+
 
 variable "docker_registry_url" {
   description = "The Docker registry URL"
   type        = string
+  default     = "https://index.docker.io"
 }
 
 # variable "grafana_auth" {
