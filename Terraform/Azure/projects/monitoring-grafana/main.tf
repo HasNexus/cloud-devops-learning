@@ -88,7 +88,7 @@ resource "null_resource" "null_vm" {
   connection {
     type        = "ssh"
     user        = var.admin_username
-    private_key = file(var.private_ssh_key)
+    private_key = var.private_ssh_key
     host        = module.vm.public_ip_address
   }
   provisioner "file" {
