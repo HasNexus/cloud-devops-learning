@@ -1,7 +1,7 @@
 # monitoring-grafana
 This Terraform configuration deploys an Azure Web App and a Linux VM with Grafana installed, connected to Azure Monitor as a data source through an Azure AD service principal.
 
-## What it does
+# What it does
 - Creates a Resource Group and Virtual Network with two subnets:
   - VM Subnet (for the Grafana host)
   - Web App Subnet (delegated to Microsoft.Web/serverFarms)
