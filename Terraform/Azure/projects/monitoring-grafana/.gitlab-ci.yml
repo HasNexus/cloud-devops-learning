@@ -10,6 +10,7 @@ stages:
 variables:
   PROJECT_NAME: "monitoring-grafana"
   TF_VAR_sub_id: $ARM_SUBSCRIPTION_ID
+  TF_VAR_my_ip_address: "0.0.0.0/0"
 
 # Validate stage
 validate-job:
