@@ -71,6 +71,6 @@ Set these in **Settings → CI/CD → Variables**:
 - The `null_resource` provisioner handles copying and executing the setup scripts over SSH, so your private key path must be correct and the VM must be reachable
 - The service principal password is marked sensitive in outputs — use `terraform output -raw grafana_client_secret` to retrieve it
 - Change the default Grafana admin password after first login
-- `TF_VAR_my_ip_address` is set to `0.0.0.0/0` in the pipeline since GitLab runners have dynamic IPs and your local IP would not work in CI. This opens Grafana port 3000 to the internet — acceptable for a lab environment. A future improvement would be to restrict this to the GitLab runner IP range or use a VPN/bastion approach.
+- `TF_VAR_my_ip_address` is set to `0.0.0.0/0` in the pipeline since GitLab runners have dynamic IPs and your local IP would not work in CI. This opens Grafana port 3000 to the internet which is fine for now. A future improvement would be to restrict this to the GitLab runner IP range or use a VPN/bastion approach. I will try to update this in the future.
 
 
