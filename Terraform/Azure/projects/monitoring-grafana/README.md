@@ -22,6 +22,19 @@ This Terraform configuration deploys an Azure Web App and a Linux VM with Grafan
 
 - Stores backend state in Azure Storage
 
+## Prerequisites
+
+Before running this project (either locally or via the pipeline), you need to create a **service principal in Azure** for GitLab to use. This service principal needs the following permissions:
+
+### Azure RBAC (Subscription level)
+- **Contributor** — allows Terraform to create and manage all infrastructure resources
+- **User Access Administrator** — allows Terraform to assign the Reader role to the Grafana service principal. Set a condition restricting this to only assigning the **Reader** role, so it cannot grant broader permissions
+
+### Microsoft Entra ID roles
+- **Cloud Application Administrator** — allows Terraform to create the Grafana app registration and service principal
+
+Once created, store the service principal's credentials as GitLab CI/CD variables (see [Required GitLab CI/CD Variables](#required-gitlab-cicd-variables) below).
+
 ## How to use
 - Copy `backend.hcl.template` to `backend.hcl` and fill in your storage account details
 - Copy `terraform.tfvars.template` to `terraform.tfvars` and fill in your own values (subscription ID, SSH key paths, IP address, etc.)
@@ -50,7 +63,6 @@ Set these in **Settings → CI/CD → Variables**:
 | `TF_BACKEND_SA` | Backend storage account name | No |
 | `TF_BACKEND_CONTAINER` | Backend container name | No |
 | `TF_VAR_location` | Azure region | No |
-| `TF_VAR_my_ip_address` | Your public IP with /32 | No |
 | `TF_VAR_ssh_key` | SSH public key contents | Yes |
 | `TF_VAR_private_ssh_key` | SSH private key contents | Yes |
 
@@ -59,5 +71,6 @@ Set these in **Settings → CI/CD → Variables**:
 - The `null_resource` provisioner handles copying and executing the setup scripts over SSH, so your private key path must be correct and the VM must be reachable
 - The service principal password is marked sensitive in outputs — use `terraform output -raw grafana_client_secret` to retrieve it
 - Change the default Grafana admin password after first login
+- `TF_VAR_my_ip_address` is set to `0.0.0.0/0` in the pipeline since GitLab runners have dynamic IPs and your local IP would not work in CI. This opens Grafana port 3000 to the internet — acceptable for a lab environment. A future improvement would be to restrict this to the GitLab runner IP range or use a VPN/bastion approach.
 
 
