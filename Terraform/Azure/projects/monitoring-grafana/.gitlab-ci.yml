@@ -8,8 +8,8 @@ stages:
 
 
 variables:
-PROJECT_NAME: "monitoring-grafana"
-TF_VAR_sub_id: $ARM_SUBSCRIPTION_ID
+  PROJECT_NAME: "monitoring-grafana"
+  TF_VAR_sub_id: $ARM_SUBSCRIPTION_ID
 
 # Validate stage
 validate-job:
