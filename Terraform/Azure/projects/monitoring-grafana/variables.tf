@@ -6,6 +6,7 @@ variable "sub_id" {
 variable "resource_group_name" {
   description = "The Resource Group where resources will be created"
   type        = string
+  default = "monitoring-rg"
 }
 
 variable "location" {
@@ -16,6 +17,7 @@ variable "location" {
 variable "prefix" {
   description = "Please enter the prefix which will be used for all resources"
   type        = string
+  default = "tf-demo"
 }
 
 variable "ssh_key" {

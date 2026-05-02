@@ -29,6 +29,31 @@ This Terraform configuration deploys an Azure Web App and a Linux VM with Grafan
 - Run `terraform apply`
 - Access Grafana at `http://<VM_PUBLIC_IP>:3000` (default credentials: `admin` / `admin`)
 
+## Pipeline (GitLab CI/CD)
+This project includes a `.gitlab-ci.yml` pipeline with five stages:
+- **Validate** - runs `terraform validate`
+- **Plan** - runs `terraform plan`
+- **Deploy** - runs `terraform apply`, generates Ansible inventory. Auto-destroys resources if the job fails.
+- **Configure** - runs Ansible playbook to update and restart the traffic script (only triggers when `grafana-traffic.yaml` or `traffic.sh` change)
+- **Cleanup** - reserved for manual teardown jobs
+
+### Required GitLab CI/CD Variables
+Set these in **Settings → CI/CD → Variables**:
+
+| Variable | Description | Sensitive |
+|----------|-------------|-----------|
+| `ARM_CLIENT_ID` | Service principal client ID | Yes |
+| `ARM_CLIENT_SECRET` | Service principal secret | Yes |
+| `ARM_TENANT_ID` | Azure tenant ID | Yes |
+| `ARM_SUBSCRIPTION_ID` | Azure subscription ID (`TF_VAR_sub_id` is derived from this automatically) | Yes |
+| `TF_BACKEND_RG` | Backend resource group name | No |
+| `TF_BACKEND_SA` | Backend storage account name | No |
+| `TF_BACKEND_CONTAINER` | Backend container name | No |
+| `TF_VAR_location` | Azure region | No |
+| `TF_VAR_my_ip_address` | Your public IP with /32 | No |
+| `TF_VAR_ssh_key` | SSH public key contents | Yes |
+| `TF_VAR_private_ssh_key` | SSH private key contents | Yes |
+
 ## Notes
 - The Grafana provider connects to the VM's public IP on port 3000 — the VM and Grafana must be fully running before the provider resources are applied
 - The `null_resource` provisioner handles copying and executing the setup scripts over SSH, so your private key path must be correct and the VM must be reachable

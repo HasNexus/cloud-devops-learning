@@ -4,7 +4,12 @@ stages:
  - plan
  - deploy
  - configure
+ - cleanup
 
+
+variables:
+PROJECT_NAME: "monitoring-grafana"
+TF_VAR_sub_id: $ARM_SUBSCRIPTION_ID
 
 # Validate stage
 validate-job:
@@ -77,7 +82,18 @@ deploy-job:
     - terraform apply -auto-approve
 
   after_script:
-    - ls -la
+    - |
+      if [ "$CI_JOB_STATUS" == "failed" ]; then
+        echo "Deployment failed for ${PROJECT_NAME}! Please check logs.";
+        echo "Initiating cleanup of resources...";
+        cd Terraform/Azure/projects/monitoring-grafana;
+        terraform init \
+          -backend-config="resource_group_name=$TF_BACKEND_RG" \
+          -backend-config="storage_account_name=$TF_BACKEND_SA" \
+          -backend-config="container_name=$TF_BACKEND_CONTAINER" \
+          -backend-config="key=monitoring.terraform.tfstate";
+        terraform destroy -auto-approve;
+      fi
   # Save the generated Ansible inventory file for use in the configure stage
   artifacts:
     paths:
@@ -101,3 +117,8 @@ configure-job:
     - cd Terraform/Azure/projects/monitoring-grafana
     - echo "Configuring infrastructure with Ansible..."
     - ansible-playbook -i inventory.yaml grafana-traffic.yaml
+
+
+
+
+
