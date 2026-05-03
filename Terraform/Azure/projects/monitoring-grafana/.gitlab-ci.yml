@@ -113,6 +113,7 @@ configure-job:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "web"'
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
 
   script:
     - cd Terraform/Azure/projects/monitoring-grafana
