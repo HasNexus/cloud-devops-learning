@@ -110,9 +110,9 @@ configure-job:
   needs: [deploy-job]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      changes:
+        - Terraform/Azure/projects/monitoring-grafana/grafana-traffic.yaml
+        - Terraform/Azure/projects/monitoring-grafana/traffic.sh
     - when: never
 
   script:
