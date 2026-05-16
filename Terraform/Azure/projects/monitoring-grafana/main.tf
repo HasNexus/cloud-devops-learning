@@ -112,7 +112,6 @@ resource "local_file" "ansible_inventory" {
   content  = <<-EOT
   webserver:
     vars:
-      ansible_ssh_private_key_file: ${var.private_ssh_key}
       ansible_user: ${var.admin_username}
     hosts:
       grafana-vm:

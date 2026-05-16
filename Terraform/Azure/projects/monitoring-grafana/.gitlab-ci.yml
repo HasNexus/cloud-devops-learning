@@ -118,6 +118,8 @@ configure-job:
   script:
     - cd Terraform/Azure/projects/monitoring-grafana
     - echo "Configuring infrastructure with Ansible..."
+    - echo "$TF_VAR_private_ssh_key" > /tmp/ansible_key
+    - chmod 600 /tmp/ansible_key
     - ansible-playbook -i inventory.yaml grafana-traffic.yaml
 
 
