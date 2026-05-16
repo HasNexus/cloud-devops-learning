@@ -4,7 +4,7 @@
 
   tasks:
   - name: Stop existing traffic script
-    ansible.builtin.shell: pkill -f traffic.sh || true
+    ansible.builtin.shell: pkill -f "/tmp/traffic.sh" || true
 
   - name: Copy traffic.sh to remote server with correct permissions
     ansible.builtin.copy:
