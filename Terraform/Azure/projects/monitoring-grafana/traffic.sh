@@ -1,5 +1,5 @@
 #!/bin/bash
-#This script generates traffic on the webapp to test monitoring setup..
+#This script generates traffic on the webapp to test monitoring setup.
 
 echo "Generating traffic on the web application"
 echo "======================================="

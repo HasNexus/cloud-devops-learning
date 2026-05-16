@@ -120,7 +120,7 @@ configure-job:
     - echo "Configuring infrastructure with Ansible..."
     - echo "$TF_VAR_private_ssh_key" > /tmp/ansible_key
     - chmod 600 /tmp/ansible_key
-    - ansible-playbook -i inventory.yaml --private-key=/tmp/ansible_key grafana-traffic.yaml
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.yaml --private-key=/tmp/ansible_key grafana-traffic.yaml
 
 
 
