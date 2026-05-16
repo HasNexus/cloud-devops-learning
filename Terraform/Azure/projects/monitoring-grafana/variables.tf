@@ -26,8 +26,9 @@ variable "ssh_key" {
 }
 
 variable "private_ssh_key" {
-  description = "Please enter the path to the private SSH key for VM admin user"
+  description = "Please enter the private SSH key for VM admin user"
   type        = string
+  sensitive   = true
 }
 
 variable "my_ip_address" {

@@ -2,7 +2,7 @@
 # This script sets up Grafana on a Linux system.
 echo "Setting up Grafana"
 echo "===================="
-echo "Installing dependencies and updating the system"ls
+echo "Installing dependencies and updating the system"
 sudo apt update
 sudo apt install wget -y
 echo "===================="
