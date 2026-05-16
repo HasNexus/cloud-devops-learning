@@ -105,7 +105,7 @@ deploy-job:
 configure-job:
   stage: configure
   image:
-    name: cytopia/ansible:latest
+    name: alpine/ansible:latest
     entrypoint: [""]
   needs: [deploy-job]
   rules:
