@@ -23,11 +23,11 @@ build-job:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
-    - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USER --password-stdin
   script:
     - cd Terraform/Azure/projects/monitoring-grafana-docker
-    - docker build -t $DOCKER_USERNAME/monitoring-webapp:latest .
-    - docker push $DOCKER_USERNAME/monitoring-webapp:latest
+    - docker build -t $DOCKER_USER/monitoring-webapp:latest .
+    - docker push $DOCKER_USER/monitoring-webapp:latest
 
 # Validate stage
 validate-job:
