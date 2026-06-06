@@ -1,2 +1,2 @@
 include:
-  - local: Terraform/Azure/projects/monitoring-grafana/.gitlab-ci.yml
+  - local: Terraform/Azure/projects/monitoring-grafana-docker/.gitlab-ci.yml
