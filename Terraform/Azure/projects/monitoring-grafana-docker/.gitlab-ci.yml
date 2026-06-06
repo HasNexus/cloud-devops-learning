@@ -1,0 +1,146 @@
+#Listing stages for the CI/CD pipeline
+stages:
+ - build
+ - validate
+ - plan
+ - deploy
+ - configure
+
+
+variables:
+  PROJECT_NAME: "monitoring-grafana-docker"
+  TF_VAR_sub_id: $ARM_SUBSCRIPTION_ID
+  TF_VAR_my_ip_address: "0.0.0.0/0"
+
+
+
+# Build stage
+build-job:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana-docker
+    - docker build -t $DOCKER_USERNAME/monitoring-webapp:latest .
+    - docker push $DOCKER_USERNAME/monitoring-webapp:latest
+
+# Validate stage
+validate-job:
+  stage: validate
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana-docker
+    - echo "Validating Terraform configuration..."
+    - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.grafana-docker.tfstate"
+    - terraform validate
+
+
+# Plan stage
+plan-job:
+  stage: plan
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
+  needs: [validate-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana-docker
+    - echo "Planning Terraform deployment..."
+    - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.grafana-docker.tfstate"
+    - terraform plan
+
+
+# Deploy stage
+deploy-job:
+  stage: deploy
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
+  needs: [plan-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - when: never
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana-docker
+    - echo "Applying Terraform deployment..."
+    - terraform init
+      -backend-config="resource_group_name=$TF_BACKEND_RG"
+      -backend-config="storage_account_name=$TF_BACKEND_SA"
+      -backend-config="container_name=$TF_BACKEND_CONTAINER"
+      -backend-config="key=monitoring.grafana-docker.tfstate"
+    - terraform apply -auto-approve
+
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "failed" ]; then
+        echo "Deployment failed for ${PROJECT_NAME}! Please check logs.";
+        echo "Initiating cleanup of resources...";
+        cd Terraform/Azure/projects/monitoring-grafana-docker;
+        terraform init \
+          -backend-config="resource_group_name=$TF_BACKEND_RG" \
+          -backend-config="storage_account_name=$TF_BACKEND_SA" \
+          -backend-config="container_name=$TF_BACKEND_CONTAINER" \
+          -backend-config="key=monitoring.grafana-docker.tfstate";
+        terraform destroy -auto-approve;
+      fi
+  # Save the generated Ansible inventory file for use in the configure stage
+  artifacts:
+    paths:
+      - Terraform/Azure/projects/monitoring-grafana-docker/inventory.yaml
+    when: always
+
+
+# Configure stage
+configure-job:
+  stage: configure
+  image:
+    name: alpine/ansible:latest
+    entrypoint: [""]
+  needs: [deploy-job]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - Terraform/Azure/projects/monitoring-grafana-docker/grafana-traffic.yaml
+        - Terraform/Azure/projects/monitoring-grafana-docker/traffic.sh
+    - when: never
+
+  script:
+    - cd Terraform/Azure/projects/monitoring-grafana-docker
+    - echo "Configuring infrastructure with Ansible..."
+    - echo "$TF_VAR_private_ssh_key" > /tmp/ansible_key
+    - chmod 600 /tmp/ansible_key
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.yaml --private-key=/tmp/ansible_key grafana-traffic.yaml
+
+
+
+
+
